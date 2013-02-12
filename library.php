@@ -96,7 +96,7 @@ class movie {
             array('Director',$this->director),
             array('Casts',$this->casts),
             array('Genres',$this->genres),
-            
+            array('IMDB ID',$this->imdbid),
         );
         return $info;
     }
@@ -195,7 +195,8 @@ var $table1='';
         
            //Make Table
         $result=
-            '<table class="imdbtable">
+            '[cinemabase '.$info[9][1].' video_player] 
+			 <table class="imdbtable table">
             <tr>
 		<td></td>
 		<td><img class="imdbposter" src="'.$info[0][1].'"></img></td>
