@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conf>
+    <description>
+        It's very important to leave undefined values the way they are. Space or enter are wrong values however this script is not sensenative to them.
+    </description>
+	<upload>
+	    
+	    <desc>General File Upload Settings</desc>
+	    <var id="maxrate" type="integer">
+	        <value></value>
+	        <description>
+	            Maximum upload speed.
+	        </description>
+	    </var>
+	    
+	    
+	    
+	    
+	    
+	    
+	    <desc>Upload Centers Settings</desc>
+	    <upcenter id="uploaded_net" type="username:password">
+	        <modulename>uploaded_net</modulename>
+	        <username></username>
+	        <password></password>
+	        <description>
+	            Currently this script only supports one user per upload center
+	            Please fill your upload centers authentication information here.
+	        </description>
+	    </upcenter>
+	    
+	    <usr id="rapidgator" type="username:password">
+	        <username></username>
+	        <password></password>
+	        <description>
+	            Currently this script only supports one user per upload center
+	            Please fill your upload centers authentication information here.
+	        </description>
+	    </usr>
+	    
+	    <usr id="ryushare" type="username:password">
+	        <username></username>
+	        <password></password>
+	        <description>
+	            Currently this script only supports one user per upload center
+	            Please fill your upload centers authentication information here.
+	        </description>
+	    </usr>
+	    
+	    <desc>Fine Grained Single File Settings</desc>
+	    <var id="msgfileloc" type="file location">
+	        <value></value>
+	        <description>
+	            msg is built from three parts, this is location of first part. first part is a txt file.
+	        </description>
+	    </var>
+	    
+	    <var id="msg" type="string">
+	        <value>this file is downloaded from rapidmoviz</value>
+	        <description>
+	            message is built from three parts, this is the main, middle, part. 
+	        </description>
+	    </var>
+	    
+	    <var id="afmsgfileloc" type="file location">
+	        <value></value>
+	        <description>
+	            message is built from three parts, this file will be appended to msg, identical to first part.
+	        </description>
+	    </var>
+	    
+	    <var id="msgfilename" type="string">
+	        <value>rapidmoviz</value>
+	        <description>
+	            file name of the built msg.
+	        </description>
+	    </var>
+	    
+	    <var id="msgfileext" type="string">
+	        <value>.txt</value>
+	        <description>
+	            extenision of the built msg.
+	        </description>
+	    </var>
+	    
+	    <var id="znamecom" type="string">
+	        <value></value>
+	        <description>
+	            Archived files names will be appended by this string
+	            filenam_thisString.ext
+	        </description>
+	        <annoation>
+	            @todo
+	            @debug
+	            @unimplemented
+	        </annoation>
+	    </var>
+	    
+	    <var id="zsplit" type="integer">
+	        <value></value>
+	        <description>
+	            The size that should be used to split files
+	        </description>
+	    </var>
+	    
+	    <var id="zcom" type="string">
+	        <value></value>
+	        <description>
+	            This string will be injected as a comment to archived file
+	        </description>
+	    </var>
+	    
+	    <var id="is_zip" type="boolean">
+	        <value>false</value>
+	        <description>
+	            Should the file be zipped?
+	        </description>
+	    </var>
+	    
+	    <var id="is_rar" type="boolean">
+	        <value>true</value>
+	        <description>
+	            Should the file be rared?
+	        </description>
+	    </var>
+	    
+	    <var id="" type="">
+	        <value>true</value>
+	        <description>
+	            
+	        </description>
+	    </var>
+	 </upload>
+</conf>
