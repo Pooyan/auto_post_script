@@ -287,5 +287,3 @@ class file_info {
  }
  
  }
-?>
-

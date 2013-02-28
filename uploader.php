@@ -47,28 +47,46 @@ foreach($t_files as $t_file){
 	}
 	
 	$i = 0;
-	$xml = new SimpleXMLElement('<xml/>');
-	$upload = $xml->addChild('upload');
+	$xml = new SimpleXMLElement("$sloc/content/$fname");
 	foreach($uplinks as $uplink){
+		$upload = $xml->addChild('upload');
 		$upload->addChild('link', $uplink);
 		$upload->addChild('size', $upsizes[$i]);
 		$upload->addAttribute('part', $i);
 		$i++;
 	}
 	
-	
-	
-	$xml = escapeshellarg(xml_finalize($xml));
-	exec("echo $xml >> $sloc/content/$fname/$fname.xml");
-
-	
-	/*
-	$uploaded_net = "-r2 --max-rate=$maxrate/k --printf=%u%n%s --auth=$username[$i]" + ":" + "$password" + "--auth-free=$freeusername[$i]" + ":" + "$freepassword" + "--description=$fdesc";
-	$rapidgator =	"-r2 --max-rate=$maxrate/k --printf=%u%n%s --auth=$username[$i]" + ":" + "$password" + "--auth-free=$freeusername[$i]" + ":" + "$freepassword" + "--description=$fdesc";
-	$ryushare =     "-r2 --max-rate=$maxrate/k --printf=%u%n%s --auth=$username[$i]" + ":" + "$password" + "--auth-free=$freeusername[$i]" + ":" + "$freepassword" + "--description=$fdesc";
-	
-	exec("plowup $uploaded_net	uploaded_net	$fpart");
-	exec("plowup $rapidgator	rapidgator		$fpart");
-	exec("plowup $ryushare 		ryushare		$fpart");
-	*/
 }
+
+/*
+ * Initiate Wordpress Post
+* @author: Samim Pezeshki
+*/
+
+include_once 'library.php';
+
+//Load file info from simpelXML object
+$my_file_info = new file_info($xml);
+
+//Instantiate movie class
+//TODO: change $name
+$myMovie= new movie($name);
+
+//Put the info into the post
+if ($myMovie->download) {
+	$info=$myMovie->getInfo();
+	$myPost=new post($info);
+}
+
+//Send the Post
+$send = new XMLRPClientWordPress('http://downloadmoviz.com/xmlrpc.php', 'movie', 'movie');
+$send->create_post2(
+		$myMovie->title.' '.$myMovie->year, //Title
+		$myPost->table1, // Content of the Post
+		array_merge($myMovie->genres,array('Genre')), //Genres as categories
+		$myMovie->casts, // Casts as tags
+		array( //Custom Fields
+				array( "key" => "format", "value" => $my_file_info->file_extention ), //File Info
+				array( "key" => "file_size", "value" => $my_file_info->file_extention ),//File Info
+		)
+);
