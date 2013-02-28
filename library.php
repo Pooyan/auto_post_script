@@ -273,3 +273,19 @@ class Logging {
     }
 }
 
+class file_info {
+	
+	var $file_size = "";
+	var $file_extention = "";
+	var $upload_link = "";
+	
+	function __construct($simplexml) {
+	
+		$this->file_size = $simplexml->xpath("//track[@type='General']//File_size[1]")[0];
+		$this->file_extention = $simplexml->xpath("//track[@type='General']//File_extension")[0];
+		$this->upload_link = $simplexml->xpath("//upload//link")[0];
+ }
+ 
+ }
+?>
+
