@@ -73,27 +73,6 @@ function is_info_available($title) {
 	return $download;
 }
 
-//dirty version
-function make_2level_xml($tagname, $secondtagname, $secondtagname2, $value, $value2){
-	$xml = escapeshellarg("
-			<$tagname>
-				<$secondtagname>
-					$value
-				</$secondtagname>
-				<$secondtagname2>
-					$value2
-				</$secondtagname2>
-			</$tagname>
-			");
-	
-	return $xml;
-}
-
-function xml_finalize($xml){
-	return "<?xml version=".'"1.0"' . " encoding=" . '"UTF-8"' . "?>
-	$xml";	
-}
-
 
 
 

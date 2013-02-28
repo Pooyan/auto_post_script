@@ -242,4 +242,5 @@
 	<picture>
 	    <link>SCRIPT_LOCATION/content/$file_name/$file_name.jpg</link>
 	</picture>
+	<title></title>
 </xml>

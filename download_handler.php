@@ -28,8 +28,8 @@ $zcom = ZCOM;
 
 //init
 exec("cd /var/download");
-exec("ls -1p", $t_files); //returnes each file in one row, so exec will return an array of each row.
-						  //option "p" will append a slash to end of directories
+exec("ls -1p /var/download", $t_files); //returnes each file in one row, so exec will return an array of each row.
+						  				//option "p" will append a slash to end of directories
 exec("mv /var/download/* /var/download/processing");//TODO: not all, those which is listed
 exec("cd /var/download/processing");
 
@@ -48,18 +48,24 @@ foreach($t_files as $t_file){
 	
 	//uncompress
 	exec("dtrx $fname -d ./", $chal); //TODO: remove if not failed.
-	if($chal != ""/*TODO: error text*/){
+	if($chal[1] != 'dtrx: ERROR: not a known archive type'){ // DEBUG, if challenge is incorrect
 		exec("rm -f $fname");
 		exec("ls -1p", $fname);
 	}
 	
 	
 	//obtain mediainfo and save it to xml file
-	exec("cd /var/download/processing/$fname.dir && mediainfo $fname", $medinf);
-	exec("echo $medinf >> $sloc/content/$fname/$fname.xml");
-	//generate thumbnails
-	exec("mtn -o '.jpg' -b 0.6 -w 0 -c 3 -r 3 -O $sloc/content/$fname /var/download/processing/$fname.dir/$fname"); // TODO: config mtn.
-	
+	$xml = new SimpleXMLElement("$sloc/content/" . $fname . '.xml', 0, true, '', false);
+	exec("ls /var/download/processing/$fname.dir/", $files);
+	foreach($files as $file){
+		exec("cd /var/download/processing/$fname.dir/ && mediainfo $file", $medinf);
+		if (!(strlen($medinf) > 800)) break;
+		$mediainfo = new SimpleXMLElement($medinf);
+		$xml->addChild('Mediainfo', $mediainfo->Mediainfo[0]->asXML());
+		exec("mtn -o '.jpg' -b 0.6 -w 0 -c 3 -r 3 -O $sloc/content/$fname /var/download/processing/$fname.dir/$file"); // TODO: config mtn.
+		$xml->addChild('picture')->addChild('link', "$sloc/content/$fname/$file.jpg");
+	}
+	$xml->asXML("$sloc/content/" . $fname . '.xml');
 	//to make a sample file
 	//$msgfileloc, message file location is the header of sample file
 	//$msg, message is body of the sample file

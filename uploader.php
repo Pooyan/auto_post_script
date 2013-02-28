@@ -40,17 +40,24 @@ foreach($t_files as $t_file){
 		
 		//seperate outputs
 		$uplinks[] = $t_uplink[0];
-		$upsize[] = $t_uplink[1];
+		$upsizes[] = $t_uplink[1];
 		}
 		
 		$i++;
 	}
 	
 	$i = 0;
+	$xml = new SimpleXMLElement('<xml/>');
+	$upload = $xml->addChild('upload');
 	foreach($uplinks as $uplink){
-		$xml .= make_2level_xml('upload', 'link', 'size', $uplink[$i], $upsize[$i]);
+		$upload->addChild('link', $uplink);
+		$upload->addChild('size', $upsizes[$i]);
+		$upload->addAttribute('part', $i);
 		$i++;
 	}
+	
+	
+	
 	$xml = escapeshellarg(xml_finalize($xml));
 	exec("echo $xml >> $sloc/content/$fname/$fname.xml");
 
